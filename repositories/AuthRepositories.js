@@ -1,5 +1,5 @@
 const db = require("../models")
-const { hashPassword } = require("../services/AuthServices")
+const { hashPassword, comparePassword, generateToken } = require("../services/AuthServices")
 
 class AuthRepositories {
   constructor(req) {
@@ -18,6 +18,33 @@ class AuthRepositories {
     })
 
     return register
+  }
+
+  async login() {
+    let { username, password } = this.body
+    const user = await db.user.findOne({
+      where: { username }
+    })
+
+    if(user) {
+      const match = comparePassword(password, user.password)
+      if(match) {
+        const payload = {
+          id: user.id,
+          username: user.username,
+          role: user.role
+        }
+
+        const token = generateToken(payload)
+        
+        return token
+        
+      } else {
+        throw new Error("Wrong username or password")
+      }
+    } else {
+      throw new Error("Wrong username or password")
+    }
   }
 }
 
