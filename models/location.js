@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class category extends Model {
+  class location extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -13,31 +13,31 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   };
-  category.init({
-    category_code: {
+  location.init({
+    location_name: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notNull: true,
         notEmpty:{
-          msg: `category code must be filled`
+          msg: `location name must be filled`
         }
       }
     },
-    category_name: {
+    location_code: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notNull: true,
         notEmpty:{
-          msg: `category name must be filled`
+          msg: `location code must be filled`
         }
       }
     }
   }, {
     sequelize,
-    modelName: 'category',
+    modelName: 'location',
     underscored: true,
   });
-  return category;
+  return location;
 };
