@@ -11,9 +11,9 @@ class AuthRepositories {
     let { username, password, role } = this.body
 
     const register = await db.user.create({
-      username, 
-      password,
-      role
+      username: username || "", 
+      password: password || "",
+      role: role || ""
     })
 
     return register

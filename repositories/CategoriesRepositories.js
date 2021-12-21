@@ -18,8 +18,8 @@ class CategoriesRepositories {
     let { category_code, category_name } = this.body
 
     const category = await db.category.create({
-      category_code, 
-      category_name
+      category_code: category_code || "", 
+      category_name: category_name || ""
     })
 
     return category
@@ -40,12 +40,9 @@ class CategoriesRepositories {
     let { id } = this.param
     let { category_code, category_name } = this.body
 
-    if(category_code == null) throw new Error("category code can not be null")
-    if(category_name == null) throw new Error("category name can not be null")
-
     const category = await db.category.update({
-      category_code, 
-      category_name
+      category_code: category_code || "", 
+      category_name: category_name || ""
     }, {
       where: { id }
     })
