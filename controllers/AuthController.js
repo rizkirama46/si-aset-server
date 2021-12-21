@@ -4,7 +4,7 @@ class AuthController {
   static async register(req, res) {
     try {
       const service = new AuthRepositories(req)
-      const { user } = await service.postRegister()
+      const user = await service.postRegister()
 
       if( user ) {
         return res.json({

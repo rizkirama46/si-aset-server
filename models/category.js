@@ -2,9 +2,8 @@
 const {
   Model
 } = require('sequelize');
-const { hashPassword } = require('../services/AuthServices');
 module.exports = (sequelize, DataTypes) => {
-  class user extends Model {
+  class category extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -14,32 +13,25 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   };
-  user.init({
-    username: {
+  category.init({
+    category_code: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notNull: true
       }
     },
-    password: {
+    category_name: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notNull: true
       }
-    },
-    role: DataTypes.STRING
+    }
   }, {
-    hooks: {
-      beforeCreate: user => {
-        if(!user.role) user.role = "staff"
-        user.password = hashPassword(user.password)
-      }
-    },
     sequelize,
-    modelName: 'user',
+    modelName: 'category',
     underscored: true,
   });
-  return user;
+  return category;
 };

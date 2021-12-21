@@ -9,11 +9,10 @@ class AuthRepositories {
 
   async postRegister() {
     let { username, password, role } = this.body
-    const hashedPassword = hashPassword(password)
 
     const register = await db.user.create({
       username, 
-      password: hashedPassword, 
+      password,
       role
     })
 
@@ -38,7 +37,7 @@ class AuthRepositories {
         const token = generateToken(payload)
         
         return token
-        
+
       } else {
         throw new Error("Wrong username or password")
       }
