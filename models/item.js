@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       item.belongsTo(models.category)
+      item.hasOne(models.asset)
     }
   };
   item.init({
