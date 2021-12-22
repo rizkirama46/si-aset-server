@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class asset extends Model {
+  class monitor extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,54 +11,21 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      asset.belongsTo(models.item)
-      asset.belongsTo(models.location)
-      asset.hasMany(models.monitor)
+      monitor.belongsTo(models.asset)
     }
   };
-  asset.init({
-    asset_code: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: true,
-        notEmpty:{
-          msg: `asset code must be filled`
-        }
-      }
-    },
-    item_id: {
+  monitor.init({
+    asset_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
         notNull: true,
         notEmpty:{
-          msg: `item must be filled`
+          msg: `asset must be filled`
         }
       }
     },
-    location_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      validate: {
-        notNull: true,
-        notEmpty:{
-          msg: `location must be filled`
-        }
-      }
-    },
-    asset_volume: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: true,
-        notEmpty:{
-          msg: `volume must be filled`
-        }
-      }
-    },
-    asset_piece: DataTypes.STRING,
-    asset_condition: {
+    condition: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
@@ -68,30 +35,40 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    asset_age:{
+    damage: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notNull: true,
         notEmpty:{
-          msg: `age must be filled`
+          msg: `damage must be filled`
         }
       }
     },
-    asset_price: {
+    maintenance:{
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notNull: true,
         notEmpty:{
-          msg: `price must be filled`
+          msg: `maintenance must be filled`
+        }
+      }
+    },
+    amount_damage: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: true,
+        notEmpty:{
+          msg: `amount of damage must be filled`
         }
       }
     }
   }, {
     sequelize,
-    modelName: 'asset',
+    modelName: 'monitor',
     underscored: true,
   });
-  return asset;
+  return monitor;
 };

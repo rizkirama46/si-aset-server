@@ -16,10 +16,37 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   item.init({
-    category_id: DataTypes.INTEGER,
-    item_name: DataTypes.STRING,
+    category_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: true,
+        notEmpty:{
+          msg: `category must be filled`
+        }
+      }
+    },
+    item_name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: true,
+        notEmpty:{
+          msg: `item name must be filled`
+        }
+      }
+    },
     merk: DataTypes.STRING,
-    year_acquisition: DataTypes.DATE
+    year_acquisition: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      validate: {
+        notNull: true,
+        notEmpty:{
+          msg: `year acquistion must be filled`
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'item',
